@@ -1,0 +1,13 @@
+{
+  "status": "draft_awaiting_user_review",
+  "title": "AI 视频工作流：我如何不重录口播做出一条视频",
+  "audience": "对 AI 工具和内容创作感兴趣的普通观众",
+  "goal": "用一条真实样片解释流程，不夸大自动化程度",
+  "target_duration_seconds": 120,
+  "format": "1920x1080@30",
+  "language": "zh-CN",
+  "avatar_target_seconds": 35,
+  "avatar_engine": "photo",
+  "tone": ["真实", "克制", "有技术感", "不过度营销"],
+  "paid_generation_allowed": false
+}
