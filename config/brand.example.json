@@ -1,0 +1,28 @@
+{
+  "name": "pilot-tech-editorial",
+  "aspect_ratio": "16:9",
+  "resolution": [1920, 1080],
+  "fps": 30,
+  "palette": {
+    "background": "#11110F",
+    "surface": "#0B171A",
+    "text": "#F5F4EF",
+    "muted": "#9FA9A7",
+    "accent": "#39D6C5"
+  },
+  "typography": {
+    "heading": "PingFang SC Semibold",
+    "body": "PingFang SC"
+  },
+  "subtitles": {
+    "max_chinese_characters_per_line": 14,
+    "max_lines": 2,
+    "placement": "bottom_safe_area",
+    "highlight_keywords": true
+  },
+  "motion": {
+    "tone": "calm_premium",
+    "one_new_information_event_at_a_time": true,
+    "minimum_card_hold_seconds": 3.5
+  }
+}

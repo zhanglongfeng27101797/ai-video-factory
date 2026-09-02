@@ -1,0 +1,19 @@
+{
+  "title": "two-minute-pilot",
+  "target_duration_seconds": 120,
+  "avatar_target_seconds": 35,
+  "avatar_engine": "photo",
+  "voice_mode": "instant_clone_test",
+  "delivery": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "approval_gates": [
+    "mother_image",
+    "voice_lipsync_test",
+    "edit_strategy",
+    "720p_preview",
+    "1080p_final"
+  ]
+}
