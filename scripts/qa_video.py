@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run deterministic technical QA and extract review frames for a video."""
+"""对成片进行可重现的技术质检，并抽取人工审查帧。"""
 
 from __future__ import annotations
 
@@ -10,18 +10,19 @@ from pathlib import Path
 
 
 def run(command: list[str]) -> subprocess.CompletedProcess[str]:
+    """运行本地音视频命令，命令失败时立即终止。"""
     return subprocess.run(command, check=True, capture_output=True, text=True)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("video", type=Path)
-    parser.add_argument("--output", type=Path, default=Path("qa"))
+    parser = argparse.ArgumentParser(description="检查视频参数并抽取人工审查帧。")
+    parser.add_argument("video", type=Path, help="需要检查的视频路径")
+    parser.add_argument("--output", type=Path, default=Path("qa"), help="质检报告和抽帧输出目录")
     args = parser.parse_args()
 
     video = args.video.resolve()
     if not video.is_file():
-        parser.error(f"video not found: {video}")
+        parser.error(f"找不到视频：{video}")
     args.output.mkdir(parents=True, exist_ok=True)
 
     probe = run([
@@ -32,6 +33,7 @@ def main() -> None:
     video_streams = [stream for stream in metadata["streams"] if stream["codec_type"] == "video"]
     audio_streams = [stream for stream in metadata["streams"] if stream["codec_type"] == "audio"]
 
+    # 固定抽取首部、1/4、中点、3/4 和尾部，便于不同版本横向比较。
     sample_times = sorted({0.2, max(0.2, duration / 4), duration / 2, duration * 3 / 4, max(0.2, duration - 0.5)})
     frames = []
     for index, timestamp in enumerate(sample_times, start=1):
@@ -49,11 +51,11 @@ def main() -> None:
         "audio_streams": audio_streams,
         "review_frames": frames,
         "manual_checks_required": [
-            "subtitle spelling and safe margins",
-            "face and lip-sync stability",
-            "black frames and visual discontinuities",
-            "audio pops, clipping, and music balance",
-            "claim accuracy and final approval"
+            "字幕错字和安全边距",
+            "人脸与嘴型同步稳定性",
+            "黑帧和画面跳变",
+            "音频爆音、削波失真和音乐平衡",
+            "内容表述准确性与最终人工确认"
         ]
     }
     report_path = args.output / "report.json"
